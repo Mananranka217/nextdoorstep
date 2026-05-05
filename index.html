@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NextDoorStep | Resale & Rentals Across East Bengaluru</title>
+    <meta
+      name="description"
+      content="NextDoorStep helps owners, tenants, and buyers with resale and rental enquiries across East Bengaluru's most active neighbourhoods."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="NextDoorStep home">
+        <span class="brand-mark">N</span>
+        <span class="brand-text">NextDoorStep</span>
+      </a>
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a href="paperwork.html">Paperwork</a>
+        <a href="#areas">Areas</a>
+        <a class="nav-cta" href="#enquiry">Get in touch</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">East Bengaluru resale & rentals</p>
+          <h1>Local property help for owners, tenants, and buyers.</h1>
+          <p class="hero-text">
+            NextDoorStep connects serious enquiries across East BLR's most
+            active residential pockets, without making you scroll through a
+            listing wall.
+          </p>
+          <div class="hero-proof" aria-label="Service summary">
+            <span>Resale</span>
+            <span>Rentals</span>
+            <span>East Bengaluru</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button primary" href="#enquiry">Send Enquiry</a>
+            <a class="button secondary" href="#areas">View Top Areas</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="Service highlights">
+          <img
+            src="assets/east-blr-neighbourhood.png"
+            alt="Light illustration of East Bengaluru residential neighbourhoods"
+          />
+          <div class="panel-grid">
+            <div>
+              <span class="panel-label">For owners</span>
+              <strong>Tenant and buyer enquiries</strong>
+            </div>
+            <div>
+              <span class="panel-label">For tenants</span>
+              <strong>Rental homes in known communities</strong>
+            </div>
+            <div>
+              <span class="panel-label">For buyers</span>
+              <strong>Resale options across mature pockets</strong>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section intro">
+        <div>
+          <p class="eyebrow">Built for neighbourhood clarity</p>
+          <h2>No endless listings. Just the areas people ask for most.</h2>
+        </div>
+        <p>
+          Share what you need and where you prefer to stay. We will understand
+          the requirement first, then help with suitable resale or rental
+          possibilities in East Bengaluru.
+        </p>
+      </section>
+
+      <section class="quote-band" aria-label="NextDoorStep promise">
+        <p>
+          "Tell us the location, budget, and timeline. We keep the next step
+          clear."
+        </p>
+      </section>
+
+      <section class="section" id="areas">
+        <div class="section-heading">
+          <p class="eyebrow">Top East BLR areas</p>
+          <h2>Popular locations we work across</h2>
+        </div>
+
+        <div class="area-layout" aria-label="Top areas across East Bengaluru">
+          <article class="area-feature">
+            <span class="area-kicker">Most requested</span>
+            <h3>Whitefield</h3>
+            <p>
+              Strong demand around ITPL, EPIP Zone, Hope Farm, Kadugodi,
+              Hoodi, and nearby gated communities.
+            </p>
+          </article>
+
+          <div class="area-clusters">
+            <article class="area-cluster">
+              <span>Office corridor</span>
+              <h3>ORR Belt</h3>
+              <ul>
+                <li>Marathahalli</li>
+                <li>Kadubeesanahalli</li>
+                <li>Bellandur</li>
+              </ul>
+            </article>
+
+            <article class="area-cluster">
+              <span>Whitefield side</span>
+              <h3>Whitefield Communities</h3>
+              <ul>
+                <li>Hoodi</li>
+                <li>Hope Farm</li>
+                <li>Kadugodi</li>
+                <li>Brookefield</li>
+              </ul>
+            </article>
+
+            <article class="area-cluster">
+              <span>Growth side</span>
+              <h3>KR Puram & Budigere</h3>
+              <ul>
+                <li>KR Puram</li>
+                <li>Mahadevapura</li>
+                <li>Budigere Cross</li>
+                <li>Varthur</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="enquiry-section" id="enquiry">
+        <div class="enquiry-copy">
+          <p class="eyebrow">Quick enquiry</p>
+          <h2>Tell us what you are looking for.</h2>
+          <p>
+            Whether you own a property, need a rental, or want to buy a resale
+            home, share the basics and we will get back with the next step.
+          </p>
+          <ul class="trust-list">
+            <li>Owner, tenant, and buyer requirements accepted</li>
+            <li>East Bengaluru focused local assistance</li>
+            <li>Simple follow-up, no listing overload</li>
+          </ul>
+        </div>
+
+        <form class="enquiry-form" id="enquiryForm">
+          <div class="form-row">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="form-row">
+            <label for="phone">Phone</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              inputmode="tel"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="role">I am a</label>
+            <select id="role" name="role" required>
+              <option value="">Select one</option>
+              <option>Owner</option>
+              <option>Tenant</option>
+              <option>Buyer</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="interest">Requirement</label>
+            <select id="interest" name="interest" required>
+              <option value="">Select one</option>
+              <option>Rental</option>
+              <option>Resale</option>
+              <option>Both</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="area">Preferred area</label>
+            <input
+              id="area"
+              name="area"
+              type="text"
+              placeholder="Whitefield, Bellandur, KR Puram..."
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              placeholder="Budget, BHK, society name, move-in timeline, or property details"
+            ></textarea>
+          </div>
+
+          <button class="button primary full" type="submit">Submit Enquiry</button>
+          <p class="form-note" id="formNote" role="status" aria-live="polite">
+            We will use these details only to respond to your enquiry.
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <span>NextDoorStep</span>
+        <span>Resale & rentals across East Bengaluru</span>
+      </div>
+      <address>
+        <strong>Office</strong>
+        <span>
+          4th Cross Rd, opp. Salarpuria Sattva Apts,
+          Venkojirao Khane, Bommanahalli, Bengaluru, Karnataka 560068
+        </span>
+        <a href="tel:9740447501">Phone: 9740447501</a>
+        <a href="mailto:support@nextdoorstep.in">support@nextdoorstep.in</a>
+      </address>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
