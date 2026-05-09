@@ -1,13 +1,21 @@
-const form = document.querySelector("#enquiryForm");
-const note = document.querySelector("#formNote");
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzYasX4CxR3pgmixRN7JROfj1OwM15gr8IBRhg4NnAsKtvHOnmybA3Oj17FByQX7cyC/exec";
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+function handleEnquiryForm(form) {
+  const note = form.querySelector(".form-note");
 
-  const formData = new FormData(form);
-  const name = formData.get("name")?.toString().trim() || "there";
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-  note.textContent = `Thanks, ${name}. Your enquiry is ready to be shared with NextDoorStep.`;
-  note.classList.add("success");
-  form.reset();
-});
+    const data = new FormData(form);
+    const name = data.get("name")?.toString().trim() || "there";
+
+    const img = new Image();
+    img.src = SHEET_URL + "?" + new URLSearchParams(data).toString();
+
+    note.textContent = `Thanks, ${name}. Your enquiry has been submitted.`;
+    note.classList.add("success");
+    form.reset();
+  });
+}
+
+document.querySelectorAll(".enquiry-form").forEach(handleEnquiryForm);
