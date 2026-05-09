@@ -1,27 +1,29 @@
 # NextDoorStep
 
-Static website for NextDoorStep — East Bengaluru's resale and rental desk. Two pages, no build tooling, no dependencies.
+Static website for NextDoorStep — a premium Bengaluru resale and rental concierge. Two pages, no build tooling, no dependencies.
+
+Live: [github.com/Mananranka217/nextdoorstep](https://github.com/Mananranka217/nextdoorstep)
 
 ---
 
 ## Pages
 
-### `index.html` — Landing page
-- Hero with service summary and proof pills
-- Intro section
-- Quote band
-- Areas section — Whitefield feature card, ORR Belt, Whitefield Communities, custom enquiry cluster
-- NextDoorStep Nexus teaser band
-- Enquiry form (routes to Sheet2 in Google Sheets)
+### `index.html` — Homepage
+- **Hero** — Headline, subheadline, trust pills (50+ families · no listing spam · same-day follow-up · local market guidance), primary CTA "Explore Properties", WhatsApp CTA, sublink to Nexus
+- **Intro** — "No endless listings. Just the areas people ask for most."
+- **Quote band** — Brand promise statement
+- **Communities We Serve** — 8-card grid (7 localities + custom enquiry card), stats strip, trust strip
+- **NextDoorStep Nexus teaser** — Brief Nexus intro with CTA
+- **Enquiry form** — Routes to Sheet2 in Google Sheets
 
 ### `nexus.html` — NextDoorStep Nexus
-Full resale transaction support page:
-- Hero with stats (70+ bank partners, 30+ services)
-- "Before you pay the token" — 7 pre-token verification checks
-- Features section — 5 feature rows with full-width overview card
-- How it works — 6-step timeline (lock → collect → legal → sign → register → transfers)
-- Services — 4 packages: Verify (₹9,999), Register (₹44,999), Complete+ (₹69,999), Custom
-- Enquiry form (routes to Sheet1 in Google Sheets)
+Full resale transaction support and documentation page:
+- **Hero** — "Buy with confidence. Sell with nothing left unresolved." + stats (70+ bank partners, 30+ Nexus services)
+- **Before you pay the token** — 7 pre-token verification checks with CTA
+- **Features** — Full-width overview card + 5 feature rows (legal diligence, documentation, transaction desk, finance, government coordination)
+- **How it works** — 6-step timeline: lock → collect → legal review → sign → register → post-purchase transfers
+- **Nexus services** — 4 packages: Verify (₹9,999), Register (₹44,999), Complete+ (₹69,999), Custom
+- **Enquiry form** — Routes to Sheet1 in Google Sheets
 
 ---
 
@@ -33,7 +35,7 @@ nds/
 ├── nexus.html
 ├── styles.css
 ├── script.js
-├── server.js          # Local dev server only, not needed in production
+├── server.js        # Local dev only — not needed in production
 └── assets/
     └── east-blr-neighbourhood.png
 ```
@@ -45,35 +47,33 @@ nds/
 Plain HTML, CSS, and JavaScript. No framework, no build step, no npm.
 
 - **Fonts** — Georgia (serif headings), Arial / system-ui (body)
-- **CSS** — Custom properties, CSS Grid throughout, clamp() for fluid sizing
-- **JS** — Single file (`script.js`), handles form submission only
+- **CSS** — Custom properties, CSS Grid throughout, `clamp()` for fluid type and spacing
+- **JS** — Single `script.js`, handles form submission only
 
 ---
 
 ## Form → Google Sheets Integration
 
-Submissions are sent via an **image request** to bypass CORS — no server required in production.
+Submissions sent via an **image request** to bypass CORS — no server required in production.
 
 ```js
 const img = new Image();
 img.src = SHEET_URL + "?" + new URLSearchParams(data).toString();
 ```
 
-**Apps Script endpoint:**
-```
-https://script.google.com/macros/s/AKfycbzYasX4CxR3pgmixRN7JROfj1OwM15gr8IBRhg4NnAsKtvHOnmybA3Oj17FByQX7cyC/exec
-```
+| | Value |
+|---|---|
+| Apps Script endpoint | `https://script.google.com/macros/s/AKfycbzYasX4CxR3pgmixRN7JROfj1OwM15gr8IBRhg4NnAsKtvHOnmybA3Oj17FByQX7cyC/exec` |
+| Spreadsheet ID | `1naVXcVL27JR0KzIFSnzIclScVLRqLM_f3kHjEugcFr4` |
 
-**Spreadsheet ID:** `1naVXcVL27JR0KzIFSnzIclScVLRqLM_f3kHjEugcFr4`
-
-| Form | Sheet | `source` field |
+| Form | Sheet | `source` value |
 |---|---|---|
 | index.html | Sheet2 | `index` |
 | nexus.html | Sheet1 | `paperwork` |
 
 **Sheet columns:** Timestamp · Name · Phone · Role · I Want To · Service · Area · Message · Source
 
-**Apps Script uses `doGet(e)`** (not `doPost`) — reads params from `e.parameter`. The script is deployed as a web app with access set to "Anyone".
+Apps Script uses `doGet(e)` (not `doPost`) and reads from `e.parameter`. Deployed as a web app with access set to "Anyone".
 
 ---
 
@@ -83,7 +83,7 @@ https://script.google.com/macros/s/AKfycbzYasX4CxR3pgmixRN7JROfj1OwM15gr8IBRhg4N
 node server.js
 ```
 
-Then open `http://localhost:3000`. The server is a simple static file server — not needed in production.
+Open `http://localhost:3000`. The server is a static file server — not needed in production.
 
 ---
 
@@ -91,15 +91,31 @@ Then open `http://localhost:3000`. The server is a simple static file server —
 
 Works on any static host with no configuration:
 
-- **Netlify** — drag and drop the folder
-- **GitHub Pages** — push to `main`, enable Pages in repo settings
-- **Vercel** — import repo, framework: Other
+| Host | How |
+|---|---|
+| Netlify | Drag and drop the folder |
+| GitHub Pages | Push to `main`, enable Pages in repo settings |
+| Vercel | Import repo, framework: Other |
 
 No build command. Publish directory is the root folder.
 
 ---
 
-## Services (NextDoorStep Nexus)
+## Communities Covered
+
+| Locality | Descriptor |
+|---|---|
+| Whitefield | High resale & rental activity |
+| Varthur | Fast-moving gated communities |
+| Budigere Cross | Emerging residential growth |
+| Hoodi | Apartment-focused micro market |
+| AECS Layout | Established residential neighbourhood |
+| Sarjapur Road | High tenant movement |
+| Kadugodi | Growing end-user demand |
+
+---
+
+## NextDoorStep Nexus — Service Packages
 
 | Package | Price | Covers |
 |---|---|---|
@@ -107,14 +123,6 @@ No build command. Publish directory is the root folder.
 | NextDoorStep Register | ₹44,999 | Verify + sale agreement, sale deed, TDS, stamp duty, registration |
 | NextDoorStep Complete+ | ₹69,999 | Register + khata, BESCOM, property tax transfers |
 | Custom | — | Seller-side, inherited property, partial documents, bespoke needs |
-
----
-
-## Areas Covered
-
-**Whitefield corridor** — Whitefield, Hoodi, Hope Farm, Kadugodi, Varthur, Brookefield
-
-**ORR Belt** — Marathahalli, Bellandur, Kadubeesanahalli, Sarjapur Road
 
 ---
 
@@ -126,6 +134,9 @@ No build command. Publish directory is the root folder.
 
 ## Contact
 
-- **WhatsApp / Call** — 9740447501
-- **Email** — support@nextdoorstep.in
-- **Address** — 4th Cross Rd, opp. Salarpuria Sattva Apts, Venkojirao Khane, Bommanahalli, Bengaluru 560068
+| | |
+|---|---|
+| WhatsApp / Call | 9740447501 |
+| Email | support@nextdoorstep.in |
+| Address | 4th Cross Rd, opp. Salarpuria Sattva Apts, Venkojirao Khane, Bommanahalli, Bengaluru 560068 |
+
