@@ -3,45 +3,43 @@ const fs = require("fs");
 const path = require("path");
 
 const root = __dirname;
-const port = Number(process.env.PORT || 5500);
+const port = Number(process.env.PORT || 3000);
+const host = "127.0.0.1";
 
-const types = {
+const contentTypes = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
-  ".js": "application/javascript; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
-  ".webp": "image/webp",
   ".svg": "image/svg+xml",
 };
 
-const server = http.createServer((request, response) => {
-  const requestUrl = new URL(request.url, `http://${request.headers.host}`);
-  const cleanPath = decodeURIComponent(requestUrl.pathname);
-  const requestedPath = cleanPath === "/" ? "/index.html" : cleanPath;
-  const filePath = path.normalize(path.join(root, requestedPath));
+const server = http.createServer((req, res) => {
+  const requestPath = decodeURIComponent(req.url.split("?")[0]);
+  const filePath = path.join(root, requestPath === "/" ? "index.html" : requestPath);
 
   if (!filePath.startsWith(root)) {
-    response.writeHead(403);
-    response.end("Forbidden");
+    res.writeHead(403);
+    res.end("Forbidden");
     return;
   }
 
   fs.readFile(filePath, (error, data) => {
     if (error) {
-      response.writeHead(404);
-      response.end("Not found");
+      res.writeHead(404);
+      res.end("Not found");
       return;
     }
 
-    response.writeHead(200, {
-      "Content-Type": types[path.extname(filePath).toLowerCase()] || "application/octet-stream",
+    res.writeHead(200, {
+      "Content-Type": contentTypes[path.extname(filePath).toLowerCase()] || "application/octet-stream",
     });
-    response.end(data);
+    res.end(data);
   });
 });
 
-server.listen(port, () => {
-  console.log(`NextDoorStep page running at http://localhost:${port}`);
+server.listen(port, host, () => {
+  console.log(`NextDoorStep running at http://${host}:${port}`);
 });

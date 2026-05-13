@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-labelledby="title">
+  <title id="title">NextDoorStep</title>
+  <rect width="520" height="120" fill="none"/>
+  <g transform="translate(18 22)">
+    <path d="M0 0h46v10H10v66H0V0Z" fill="#ff6a00"/>
+    <path d="M44 0 76-8v92l-32-8V0Z" fill="#ff6a00"/>
+    <path d="M55 44h15" stroke="#123238" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <text x="120" y="73" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="800" letter-spacing="-2">next</text>
+  <text x="228" y="73" fill="#f08a28" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="800" letter-spacing="-2">doorstep</text>
+</svg>
