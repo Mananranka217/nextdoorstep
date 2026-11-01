@@ -1,6 +1,7 @@
 "use client";
 
 import PrefillLink from "@/components/ui/PrefillLink";
+import { Arrow } from "@/components/owners/icons";
 
 // ── Types ──────────────────────────────────────────────────────
 type PricingPlan = {
@@ -98,7 +99,7 @@ export default function PricingTable({
               )}
               {plan.onboardingTarget && (
                 <div className="pt-target">
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="var(--green)" strokeWidth="1.5"/><path d="M8 4.5v4l2.5 2" stroke="var(--green)" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M8 4.5v4l2.5 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
                   Tenant in {plan.onboardingTarget}
                 </div>
               )}
@@ -109,6 +110,7 @@ export default function PricingTable({
                 note={plan.enquiryNote}
               >
                 Choose {plan.name}
+                <span className="pt-cta-arrow"><Arrow /></span>
               </PrefillLink>
             </div>
           ))}
@@ -152,22 +154,41 @@ export default function PricingTable({
               {plan.brokerage && <div className="pt-brokerage">+ {plan.brokerage}</div>}
               {plan.onboardingTarget && (
                 <div className="pt-target">
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="var(--green)" strokeWidth="1.5"/><path d="M8 4.5v4l2.5 2" stroke="var(--green)" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M8 4.5v4l2.5 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
                   Tenant in {plan.onboardingTarget}
                 </div>
               )}
-              <ul className="pt-mobile-features">
-                {(config.features as FeatureRow[]).map((feat, fi) => {
-                  const planIndex = plans.findIndex((p) => p.id === plan.id);
-                  const included = feat.plans[planIndex];
-                  return (
-                    <li key={fi} className={`pt-mobile-feat${!included ? " pt-mobile-feat--off" : ""}`}>
-                      {included ? <Tick /> : <Cross />}
-                      <span>{feat.label}</span>
-                    </li>
-                  );
-                })}
-              </ul>
+              {(() => {
+                const planIndex = plans.findIndex((p) => p.id === plan.id);
+                const feats = config.features as FeatureRow[];
+                const included = feats.filter((f) => f.plans[planIndex]);
+                const excluded = feats.filter((f) => !f.plans[planIndex]);
+                return (
+                  <>
+                    <ul className="pt-mobile-features">
+                      {included.map((feat) => (
+                        <li key={feat.label} className="pt-mobile-feat">
+                          <Tick />
+                          <span>{feat.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {excluded.length > 0 && (
+                      <details className="pt-more">
+                        <summary>See full comparison</summary>
+                        <ul className="pt-mobile-features">
+                          {excluded.map((feat) => (
+                            <li key={feat.label} className="pt-mobile-feat pt-mobile-feat--off">
+                              <Cross />
+                              <span>{feat.label}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    )}
+                  </>
+                );
+              })()}
               <PrefillLink
                 className={`pt-cta pt-cta--full${plan.recommended ? " pt-cta--rec" : ""}`}
                 role={audience}
@@ -175,6 +196,7 @@ export default function PricingTable({
                 note={plan.enquiryNote}
               >
                 Choose {plan.name}
+                <span className="pt-cta-arrow"><Arrow /></span>
               </PrefillLink>
             </div>
           ))}

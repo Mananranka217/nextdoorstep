@@ -5,7 +5,7 @@ import PrefillLink from "@/components/ui/PrefillLink";
 import { StaggerGrid, StaggerItem } from "@/components/ui/Stagger";
 import type { AudienceCard } from "@/content/audiences";
 
-function Point({ text, link }: { text: string; link: boolean }): ReactNode {
+export function Point({ text, link }: { text: string; link: boolean }): ReactNode {
   if (!link) return text;
   const [before, after = ""] = text.split("Nexus");
   return (

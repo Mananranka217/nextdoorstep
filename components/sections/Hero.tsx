@@ -7,6 +7,7 @@ import { localities } from "@/content/localities";
 import { waLink } from "@/content/site";
 import { PREFILL_EVENT, type PrefillDetail } from "@/lib/prefill";
 import { WhatsAppIcon } from "@/components/ui/Icons";
+import RevealTitle from "@/components/ui/RevealTitle";
 
 // Swap this file (keep the path, or change it here) to use a real photograph.
 // Recommended: 2400px wide JPG/WebP, dark enough on the left for white text.
@@ -19,11 +20,6 @@ const intents = [
   { label: "Rent a home", value: "Rent a home", role: "Tenant" },
   { label: "Sell my property", value: "Sell my property", role: "Owner" },
   { label: "Rent out my property", value: "Rent out my property", role: "Owner" },
-];
-
-const lines = [
-  { words: ["Buy,", "sell", "&", "rent"], accent: false },
-  { words: ["done", "properly."], accent: true },
 ];
 
 export default function Hero() {
@@ -53,8 +49,6 @@ export default function Hero() {
           transition: { duration: 0.6, ease, delay },
         };
 
-  let wordIndex = 0;
-
   return (
     <section className="hx" aria-labelledby="hero-heading">
       <div className="hx-bg" aria-hidden="true">
@@ -68,27 +62,11 @@ export default function Hero() {
           East Bengaluru&apos;s Trusted Property Partner
         </motion.p>
 
-        <h1 id="hero-heading" className="hx-title" aria-label="Buy, sell & rent done properly.">
-          {lines.map((line) => (
-            <span key={line.words.join(" ")} className={`hx-line${line.accent ? " hx-line--accent" : ""}`} aria-hidden="true">
-              {line.words.map((w) => {
-                const i = wordIndex++;
-                return (
-                  <span className="hx-mask" key={`${w}-${i}`}>
-                    <motion.span
-                      className="hx-word"
-                      initial={reduce ? false : { y: "110%" }}
-                      animate={{ y: 0 }}
-                      transition={{ duration: 0.8, ease, delay: 0.15 + i * 0.09 }}
-                    >
-                      {w}
-                    </motion.span>
-                  </span>
-                );
-              })}
-            </span>
-          ))}
-        </h1>
+        <RevealTitle
+          id="hero-heading"
+          label="Buy, sell & rent done properly."
+          lines={[{ words: ["Buy,", "sell", "&", "rent"] }, { words: ["done", "properly."], accent: true }]}
+        />
 
         <motion.p className="hx-text" {...fade(0.6)}>
           Shortlisted properties, verified tenants, and resale deals — one team handling it all across East Bengaluru&apos;s most active communities.

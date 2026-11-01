@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import AudienceCards from "@/components/sections/AudienceCards";
+import OwnersHero from "@/components/owners/OwnersHero";
+import OwnerPaths from "@/components/owners/OwnerPaths";
+import OwnerTimeline from "@/components/owners/OwnerTimeline";
+import ReassuranceBand from "@/components/owners/ReassuranceBand";
 import PricingTable from "@/components/sections/PricingTable";
 import EnquirySection from "@/components/sections/EnquirySection";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { ownerCards } from "@/content/audiences";
 import { rentOutConfig } from "@/content/pricing.config";
 
 export const metadata: Metadata = {
@@ -15,20 +17,11 @@ export const metadata: Metadata = {
 export default function OwnersPage() {
   return (
     <>
-      <section className="who-section" aria-labelledby="owners-title">
-        <SectionHeader
-          id="owners-title"
-          eyebrow="Owners"
-          title="Rent out"
-          accent="or sell."
-          sub="Two ways we help owners across East Bengaluru. Every button opens the enquiry form with your details half-filled."
-        />
-        <div className="who-panel">
-          <AudienceCards cards={ownerCards} />
-        </div>
-      </section>
+      <OwnersHero />
+      <OwnerPaths />
+      <OwnerTimeline />
 
-      <section className="plans-section" aria-labelledby="owner-pricing-title">
+      <section className="plans-section" id="owner-pricing" aria-labelledby="owner-pricing-title">
         <div className="plans-inner">
           <SectionHeader
             id="owner-pricing-title"
@@ -41,6 +34,7 @@ export default function OwnersPage() {
         </div>
       </section>
 
+      <ReassuranceBand />
       <EnquirySection defaultRole="Owner" />
     </>
   );

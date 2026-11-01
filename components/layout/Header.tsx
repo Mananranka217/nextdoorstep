@@ -27,8 +27,8 @@ export default function Header() {
   const [closed, setClosed] = useState<string | null>(null);
   const featured = nexusPackages.find((p) => p.featured);
   const nexusActive = pathname === "/nexus";
-  // Home page only: header floats transparent over the hero until the page scrolls.
-  const overHero = pathname === "/" && !scrolled && !menuOpen;
+  // Home and owners pages: header floats transparent over the hero until the page scrolls.
+  const overHero = (pathname === "/" || pathname === "/owners") && !scrolled && !menuOpen;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
