@@ -1,19 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { localities } from "@/content/localities";
-import { site, waLink } from "@/content/site";
+import { waLink } from "@/content/site";
 import { PREFILL_EVENT, type PrefillDetail } from "@/lib/prefill";
 import { WhatsAppIcon } from "@/components/ui/Icons";
 
-const ease = [0.22, 1, 0.36, 1] as const;
+// Swap this file (keep the path, or change it here) to use a real photograph.
+// Recommended: 2400px wide JPG/WebP, dark enough on the left for white text.
+const HERO_IMAGE = "/assets/hero/hero.svg";
 
-const fadeUp = (delay: number) => ({
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease, delay },
-});
+const ease = [0.22, 1, 0.36, 1] as const;
 
 const intents = [
   { label: "Buy a home", value: "Buy a resale home", role: "Buyer" },
@@ -22,7 +21,13 @@ const intents = [
   { label: "Rent out my property", value: "Rent out my property", role: "Owner" },
 ];
 
+const lines = [
+  { words: ["Buy,", "sell", "&", "rent"], accent: false },
+  { words: ["done", "properly."], accent: true },
+];
+
 export default function Hero() {
+  const reduce = useReducedMotion();
   const [intent, setIntent] = useState(intents[0]);
   const [area, setArea] = useState("");
   const [budget, setBudget] = useState("");
@@ -39,116 +44,118 @@ export default function Hero() {
     history.replaceState(null, "", "#enquiry");
   }
 
+  const fade = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 18 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, ease, delay },
+        };
+
+  let wordIndex = 0;
+
   return (
-    <section className="hero" aria-labelledby="hero-heading">
-      <div className="hero-copy">
-        <motion.div className="hero-badge" {...fadeUp(0.05)}>
-          🏆 East Bengaluru's Trusted Property Partner
-        </motion.div>
-        <motion.h1 id="hero-heading" {...fadeUp(0.15)}>
-          Buy, sell &amp; rent<br />done properly.
-        </motion.h1>
-        <motion.p className="hero-text" {...fadeUp(0.25)}>
-          Shortlisted properties, verified tenants, and resale deals — one team handling it all across East Bengaluru's most active communities.
+    <section className="hx" aria-labelledby="hero-heading">
+      <div className="hx-bg" aria-hidden="true">
+        <Image src={HERO_IMAGE} alt="" fill priority sizes="100vw" className="hx-img" />
+      </div>
+      <div className="hx-overlay" aria-hidden="true" />
+
+      <div className="hx-inner">
+        <motion.p className="hx-pill" {...fade(0.05)}>
+          <span className="hx-pill-dot" aria-hidden="true" />
+          East Bengaluru&apos;s Trusted Property Partner
         </motion.p>
 
-        <motion.form className="hero-form" onSubmit={handleSubmit} aria-label="Quick enquiry" {...fadeUp(0.35)}>
-          <div className="hero-form-row">
-            <div className="hero-form-field">
-              <label htmlFor="hero-intent" className="hero-form-label">I want to</label>
-              <select
-                id="hero-intent"
-                className="hero-form-select"
-                value={intent.value}
-                onChange={(e) => setIntent(intents.find((i) => i.value === e.target.value) ?? intents[0])}
-              >
-                {intents.map((i) => (
-                  <option key={i.value} value={i.value}>{i.label}</option>
-                ))}
-              </select>
-            </div>
+        <h1 id="hero-heading" className="hx-title" aria-label="Buy, sell & rent done properly.">
+          {lines.map((line) => (
+            <span key={line.words.join(" ")} className={`hx-line${line.accent ? " hx-line--accent" : ""}`} aria-hidden="true">
+              {line.words.map((w) => {
+                const i = wordIndex++;
+                return (
+                  <span className="hx-mask" key={`${w}-${i}`}>
+                    <motion.span
+                      className="hx-word"
+                      initial={reduce ? false : { y: "110%" }}
+                      animate={{ y: 0 }}
+                      transition={{ duration: 0.8, ease, delay: 0.15 + i * 0.09 }}
+                    >
+                      {w}
+                    </motion.span>
+                  </span>
+                );
+              })}
+            </span>
+          ))}
+        </h1>
 
-            <div className="hero-form-field">
-              <label htmlFor="hero-area" className="hero-form-label">Area</label>
-              <input
-                id="hero-area"
-                className="hero-form-input"
-                type="text"
-                list="hero-locality-list"
-                placeholder="Whitefield…"
-                value={area}
-                onChange={(e) => setArea(e.target.value)}
-              />
-              <datalist id="hero-locality-list">
-                {localities.map((l) => <option key={l} value={l} />)}
-              </datalist>
-            </div>
-
-            <div className="hero-form-field">
-              <label htmlFor="hero-budget" className="hero-form-label">Budget</label>
-              <input
-                id="hero-budget"
-                className="hero-form-input"
-                type="text"
-                placeholder="₹60L or ₹25k/mo"
-                value={budget}
-                onChange={(e) => setBudget(e.target.value)}
-              />
-            </div>
-
-            <button className="hero-form-btn" type="submit">Get a Shortlist</button>
-          </div>
-        </motion.form>
+        <motion.p className="hx-text" {...fade(0.6)}>
+          Shortlisted properties, verified tenants, and resale deals — one team handling it all across East Bengaluru&apos;s most active communities.
+        </motion.p>
 
         <motion.a
-          className="hero-wa-link"
+          className="hx-wa"
           href={waLink("Hi NextDoorStep, I want a property shortlist for East Bengaluru.")}
           target="_blank"
           rel="noopener"
-          {...fadeUp(0.42)}
+          {...fade(0.7)}
         >
-          <WhatsAppIcon size={15} />
-          Or chat on WhatsApp
+          <WhatsAppIcon size={16} />
+          Chat on WhatsApp
         </motion.a>
-
-        <motion.div className="hero-stats" {...fadeUp(0.5)}>
-          <div className="hero-stat"><strong>Resale</strong><span>Buy &amp; sell</span></div>
-          <div className="hero-stat-sep" aria-hidden="true" />
-          <div className="hero-stat"><strong>Rental</strong><span>Owners &amp; tenants</span></div>
-          <div className="hero-stat-sep" aria-hidden="true" />
-          <div className="hero-stat"><strong>50+</strong><span>Families helped</span></div>
-          <div className="hero-stat-sep" aria-hidden="true" />
-          <div className="hero-stat"><strong>RERA</strong><span>Registered</span></div>
-        </motion.div>
       </div>
 
-      <motion.aside
-        className="hero-panel"
-        aria-label="Service highlights"
-        initial={{ opacity: 0, x: 32 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-      >
-        <img
-          src="/assets/east-blr-neighbourhood.png"
-          alt="Bengaluru residential communities illustration"
-          loading="eager"
-        />
-        <div className="panel-grid">
-          <div>
-            <span className="panel-label">For owners</span>
-            <strong>Rent out or sell with verified enquiry handling.</strong>
-          </div>
-          <div>
-            <span className="panel-label">For tenants</span>
-            <strong>Rentals across communities people actually want.</strong>
-          </div>
-          <div>
-            <span className="panel-label">For buyers</span>
-            <strong>Shortlisted resale homes, no listing overload.</strong>
-          </div>
+      <motion.form className="hx-search" onSubmit={handleSubmit} aria-label="Quick enquiry" {...fade(0.8)}>
+        <div className="hx-field">
+          <label htmlFor="hero-intent" className="hx-label">I want to</label>
+          <select
+            id="hero-intent"
+            className="hx-control"
+            value={intent.value}
+            onChange={(e) => setIntent(intents.find((i) => i.value === e.target.value) ?? intents[0])}
+          >
+            {intents.map((i) => (
+              <option key={i.value} value={i.value}>{i.label}</option>
+            ))}
+          </select>
         </div>
-      </motion.aside>
+
+        <div className="hx-field">
+          <label htmlFor="hero-area" className="hx-label">Area</label>
+          <input
+            id="hero-area"
+            className="hx-control"
+            type="text"
+            list="hero-locality-list"
+            placeholder="Whitefield…"
+            value={area}
+            onChange={(e) => setArea(e.target.value)}
+          />
+          <datalist id="hero-locality-list">
+            {localities.map((l) => <option key={l} value={l} />)}
+          </datalist>
+        </div>
+
+        <div className="hx-field">
+          <label htmlFor="hero-budget" className="hx-label">Budget</label>
+          <input
+            id="hero-budget"
+            className="hx-control"
+            type="text"
+            placeholder="₹60L or ₹25k/mo"
+            value={budget}
+            onChange={(e) => setBudget(e.target.value)}
+          />
+        </div>
+
+        <button className="hx-cta" type="submit">
+          Get a Shortlist
+          <svg className="hx-cta-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </motion.form>
     </section>
   );
 }

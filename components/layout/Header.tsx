@@ -7,6 +7,7 @@ import { mainNav, nexusServices } from "@/content/nav";
 import { nexusPackages } from "@/content/nexusPackages";
 import { site, waLink } from "@/content/site";
 import { WhatsAppIcon } from "@/components/ui/Icons";
+import TickerBar from "@/components/layout/TickerBar";
 
 function PhoneIcon() {
   return (
@@ -26,6 +27,8 @@ export default function Header() {
   const [closed, setClosed] = useState<string | null>(null);
   const featured = nexusPackages.find((p) => p.featured);
   const nexusActive = pathname === "/nexus";
+  // Home page only: header floats transparent over the hero until the page scrolls.
+  const overHero = pathname === "/" && !scrolled && !menuOpen;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -94,10 +97,11 @@ export default function Header() {
 
   return (
     <>
-    <header className={`site-header${scrolled ? " scrolled" : ""}`} id="siteHeader">
+    {pathname === "/" && <TickerBar />}
+    <header className={`site-header${scrolled ? " scrolled" : ""}${overHero ? " over-hero" : ""}`} id="siteHeader">
       <div className="nav-inner">
         <Link className="brand" href="/" aria-label="NextDoorStep home">
-          <img className="brand-logo" src="/assets/logo-clean.svg" alt="NextDoorStep" />
+          <img className="brand-logo" src={overHero ? "/assets/logo-clean-light.svg" : "/assets/logo-clean.svg"} alt="NextDoorStep" />
         </Link>
 
         <nav className="top-nav" aria-label="Primary navigation">

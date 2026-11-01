@@ -1,4 +1,5 @@
 import Hero from "@/components/sections/Hero";
+import TrustRow from "@/components/sections/TrustRow";
 import Intro from "@/components/sections/Intro";
 import HomeAudience from "@/components/sections/HomeAudience";
 import HowItWorks from "@/components/sections/HowItWorks";
@@ -20,6 +21,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <TrustRow />
       <HomeAudience />
       <Intro />
       <HowItWorks />
