@@ -1,0 +1,23 @@
+{
+  "name": "nextdoorstep",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx serve@14 out -l 3000",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "framer-motion": "^14.7.1",
+    "next": "15.5.28",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.0",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9",
+    "typescript": "5.9.2"
+  }
+}
