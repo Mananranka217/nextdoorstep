@@ -1,7 +1,25 @@
 import EnquiryForm from "./EnquiryForm";
 import { site, waLink } from "@/content/site";
+import { steps } from "@/components/nexus/nexusData";
 
 type Props = { variant?: "general" | "nexus"; defaultRole?: string; defaultInterest?: string };
+
+const channels = (
+  <div className="enquiry-channels">
+    <a href={waLink()} className="channel-link">
+      <span className="channel-dot wa" />
+      WhatsApp
+    </a>
+    <a href={`tel:${site.phoneTel}`} className="channel-link">
+      <span className="channel-dot call" />
+      Phone call
+    </a>
+    <a href={`mailto:${site.email}`} className="channel-link">
+      <span className="channel-dot mail" />
+      Email
+    </a>
+  </div>
+);
 
 /** The dark enquiry band that ends every page. Navigation's "Contact" jumps here. */
 export default function EnquirySection({ variant = "general", defaultRole, defaultInterest }: Props) {
@@ -21,6 +39,15 @@ export default function EnquirySection({ variant = "general", defaultRole, defau
               <li>One team from title check to final registration</li>
               <li>Follow-up within a few hours on WhatsApp or phone</li>
             </ul>
+            <div className="enq-steps">
+              <p className="enq-steps-title">What happens after you send this</p>
+              <ol>
+                {steps.slice(0, 3).map((st) => (
+                  <li key={st.title}>{st.title}</li>
+                ))}
+              </ol>
+            </div>
+            {channels}
           </>
         ) : (
           <>
@@ -35,20 +62,7 @@ export default function EnquirySection({ variant = "general", defaultRole, defau
               <li>For buyers, tenants, and property owners</li>
               <li>Direct follow-up within a few hours</li>
             </ul>
-            <div className="enquiry-channels">
-              <a href={waLink()} className="channel-link">
-                <span className="channel-dot wa" />
-                WhatsApp
-              </a>
-              <a href={`tel:${site.phoneTel}`} className="channel-link">
-                <span className="channel-dot call" />
-                Phone call
-              </a>
-              <a href={`mailto:${site.email}`} className="channel-link">
-                <span className="channel-dot mail" />
-                Email
-              </a>
-            </div>
+            {channels}
           </>
         )}
       </div>

@@ -66,3 +66,30 @@ export const Building = ({ size }: P) => (
 export const Percent = ({ size }: P) => (
   <Svg size={size}><path d="M19 5L5 19" /><circle cx="7" cy="7" r="2.5" /><circle cx="17" cy="17" r="2.5" /></Svg>
 );
+export const Deed = ({ size }: P) => (
+  <Svg size={size}><path d="M6 3h9l4 4v14H6z" /><path d="M15 3v4h4M9 12h7M9 16h7" /></Svg>
+);
+export const Certificate = ({ size }: P) => (
+  <Svg size={size}><rect x="3" y="4" width="18" height="12" rx="2" /><circle cx="12" cy="10" r="2.5" /><path d="M9 16l-1 5 4-2 4 2-1-5" /></Svg>
+);
+export const Book = ({ size }: P) => (
+  <Svg size={size}><path d="M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3z" /><path d="M5 17a3 3 0 013-3h11M9 8h6" /></Svg>
+);
+export const Bank = ({ size }: P) => (
+  <Svg size={size}><path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18" /></Svg>
+);
+export const Blueprint = ({ size }: P) => (
+  <Svg size={size}><rect x="3" y="4" width="18" height="16" rx="1" /><path d="M3 9h18M9 9v11M14 14h4" /></Svg>
+);
+export const Receipt = ({ size }: P) => (
+  <Svg size={size}><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" /><path d="M9 8h6M9 12h6" /></Svg>
+);
+export const Signature = ({ size }: P) => (
+  <Svg size={size}><path d="M6 3h9l4 4v6M6 3v18h6" /><path d="M14 20c1.5-3 3-3 3-1s1.5 1.500 3-1.500" /></Svg>
+);
+export const Desk = ({ size }: P) => (
+  <Svg size={size}><circle cx="12" cy="7" r="3.5" /><path d="M4 21v-2a4 4 0 014-4h8a4 4 0 014 4v2" /><path d="M10 17l2 2 2-2" /></Svg>
+);
+export const Landmark = ({ size }: P) => (
+  <Svg size={size}><path d="M12 3l9 5H3z" /><path d="M5 8v10M19 8v10M9 11v7M15 11v7M3 21h18" /></Svg>
+);

@@ -1,32 +1,84 @@
+"use client";
+
+import Image from "next/image";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import RevealTitle from "@/components/ui/RevealTitle";
+import CountUp from "@/components/ui/CountUp";
+import { WhatsAppIcon } from "@/components/ui/Icons";
+import { waLink } from "@/content/site";
+import { Arrow } from "@/components/owners/icons";
+
+const HERO_IMAGE = "/assets/east-blr-neighbourhood.png";
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export default function NexusHero() {
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 700], [0, reduce ? 0 : 90]);
+
+  const fade = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0.01, y: 14 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.35, ease, delay },
+        };
+
   return (
-    <>
-      <section className="paper-hero">
-              <div>
-                <p className="eyebrow">Safe resale transactions</p>
-                <h1>Buy with confidence. Sell with nothing left unresolved.</h1>
-                <p>
-                  Every resale transaction has hidden risk — in documents, ownership
-                  chains, and government records. We find it before it costs you.
-                  Legal diligence through final registration, coordinated end-to-end.
-                </p>
-                <a className="button primary" href="#enquiry">Check My Documents</a>
-              </div>
-              <aside className="paper-stats" aria-label="Nexus highlights">
-                <div>
-                  <strong>70+</strong>
-                  <span>Bank partners</span>
-                </div>
-                <div>
-                  <strong>30+</strong>
-                  <span>Nexus services</span>
-                </div>
-                <div>
-                  <strong>1</strong>
-                  <span>Team coordinating the process</span>
-                </div>
-              </aside>
-            </section>
-    </>
+    <section className="hx hx--page nx-hero" aria-labelledby="nx-hero-title">
+      <motion.div className="hx-bg hx-parallax" aria-hidden="true" style={{ y }}>
+        <Image src={HERO_IMAGE} alt="" fill priority sizes="100vw" className="hx-img" />
+      </motion.div>
+      <div className="hx-overlay nx-overlay" aria-hidden="true" />
+
+      <div className="hx-inner">
+        <motion.p className="hx-pill" {...fade(0.02)}>
+          <span className="hx-pill-dot" aria-hidden="true" />
+          Safe resale transactions
+        </motion.p>
+
+        <RevealTitle
+          id="nx-hero-title"
+          className="nx-title"
+          label="Buy with confidence. Sell with nothing left unresolved."
+          lines={[
+            { words: ["Buy", "with", "confidence."] },
+            { words: ["Sell", "with", "nothing", "left", "unresolved."], accent: true },
+          ]}
+        />
+
+        <motion.p className="hx-text" {...fade(0.25)}>
+          Every resale transaction has hidden risk — in documents, ownership chains, and government records. We find it
+          before it costs you. Legal diligence through final registration, coordinated end-to-end.
+        </motion.p>
+
+        <motion.div className="nx-actions" {...fade(0.3)}>
+          <a className="hx-cta hx-cta--link" href="#enquiry">
+            Check My Documents
+            <span className="hx-cta-arrow"><Arrow /></span>
+          </a>
+          <a className="hx-wa nx-wa" href={waLink()} target="_blank" rel="noopener">
+            <WhatsAppIcon size={16} />
+            WhatsApp
+          </a>
+        </motion.div>
+      </div>
+
+      <dl className="nx-stats" aria-label="Nexus highlights">
+        <div>
+          <dt><strong><CountUp to={70} suffix="+" /></strong></dt>
+          <dd>Bank partners</dd>
+        </div>
+        <div>
+          <dt><strong><CountUp to={30} suffix="+" /></strong></dt>
+          <dd>Nexus services</dd>
+        </div>
+        <div>
+          <dt><strong>1</strong></dt>
+          <dd>Team coordinating the process</dd>
+        </div>
+      </dl>
+    </section>
   );
 }

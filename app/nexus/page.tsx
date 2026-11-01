@@ -5,6 +5,7 @@ import NexusTokens from "@/components/nexus/NexusTokens";
 import NexusFeatures from "@/components/nexus/NexusFeatures";
 import NexusTimeline from "@/components/nexus/NexusTimeline";
 import NexusTrust from "@/components/nexus/NexusTrust";
+import StickyCheckCta from "@/components/nexus/StickyCheckCta";
 import EnquirySection from "@/components/sections/EnquirySection";
 
 export const metadata: Metadata = {
@@ -17,12 +18,13 @@ export default function NexusPage() {
   return (
     <>
       <NexusHero />
-      <NexusPricing />
       <NexusTokens />
-      <NexusFeatures />
       <NexusTimeline />
+      <NexusFeatures />
+      <NexusPricing />
       <NexusTrust />
       <EnquirySection variant="nexus" />
+      <StickyCheckCta />
     </>
   );
 }
