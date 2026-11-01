@@ -1223,6 +1223,7 @@ textarea { resize: vertical; }
   margin: 0;
 }
 .form-note.success { color: var(--green-dark); font-weight: 600; }
+.form-note.error { color: #b3261e; font-weight: 600; }
 .label-opt { font-size: var(--fs-xs); font-weight: 400; color: var(--gray-400); margin-left: 4px; }
 
 /* ── Pricing table (PricingTable.tsx) ────────────────────────── */

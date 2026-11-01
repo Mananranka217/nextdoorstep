@@ -31,7 +31,8 @@ export default function EnquiryForm({ variant = "general", defaultRole = "", def
     area: "",
     message: "",
   });
-  const [note, setNote] = useState<{ text: string; success: boolean }>({
+  const [sending, setSending] = useState(false);
+  const [note, setNote] = useState<{ text: string; success: boolean; error?: boolean }>({
     text: isNexus
       ? "We will use these details only to respond to your enquiry."
       : "We follow up on WhatsApp or phone within a few hours.",
@@ -65,8 +66,9 @@ export default function EnquiryForm({ variant = "general", defaultRole = "", def
     return (e: { target: { value: string } }) => setValues((v) => ({ ...v, [field]: e.target.value }));
   }
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
+    if (sending) return;
     const data: Record<string, string> = {
       source: isNexus ? "paperwork" : "index",
       name: values.name,
@@ -77,14 +79,32 @@ export default function EnquiryForm({ variant = "general", defaultRole = "", def
     };
     if (isNexus) data.service = values.service;
     else data.interest = values.interest;
+    const url = `${site.sheetUrl}?${new URLSearchParams(data).toString()}`;
 
-    // An image request reaches the Apps Script without CORS problems, as on the current site.
-    const img = new Image();
-    img.src = `${site.sheetUrl}?${new URLSearchParams(data).toString()}`;
-
-    setNote({ text: `Thanks, ${values.name.trim() || "there"}. Your enquiry has been submitted.`, success: true });
-    autoNote.current = "";
-    setValues({ name: "", phone: "", role: "", interest: "", service: "", area: "", message: "" });
+    setSending(true);
+    setNote({ text: "Sending your enquiry…", success: false });
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 15000);
+    try {
+      const res = await fetch(url, { signal: controller.signal, cache: "no-store" });
+      if (!res.ok) throw new Error(`Sheet responded ${res.status}`);
+      setNote({ text: `Thanks, ${values.name.trim() || "there"}. Your enquiry has been submitted.`, success: true });
+      autoNote.current = "";
+      setValues({ name: "", phone: "", role: "", interest: "", service: "", area: "", message: "" });
+    } catch {
+      // We can't confirm delivery (script unreachable, not shared publicly, or blocked). Fire the
+      // old fire-and-forget request as a best-effort backup, but keep what the person typed and
+      // tell them how to reach us instead of showing a false "submitted".
+      new Image().src = url;
+      setNote({
+        text: `We couldn't confirm your enquiry went through. Please WhatsApp or call us on ${site.phoneDisplay}, or email ${site.email}.`,
+        success: false,
+        error: true,
+      });
+    } finally {
+      window.clearTimeout(timer);
+      setSending(false);
+    }
   }
 
   return (
@@ -183,10 +203,10 @@ export default function EnquiryForm({ variant = "general", defaultRole = "", def
         />
       </div>
 
-      <button className="button primary full" type="submit">
+      <button className="button primary full" type="submit" disabled={sending}>
         {isNexus ? "Plan My Registration" : "Get My Shortlist"}
       </button>
-      <p className={`form-note${note.success ? " success" : ""}`} role="status" aria-live="polite">
+      <p className={`form-note${note.success ? " success" : ""}${note.error ? " error" : ""}`} role="status" aria-live="polite">
         {note.text}
       </p>
     </form>
