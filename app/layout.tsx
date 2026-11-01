@@ -6,10 +6,10 @@ import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import { site } from "@/content/site";
 import "./globals.css";
 
+// Plus Jakarta Sans and Inter are variable fonts: one file covers every weight we use (600/700 and 400-700).
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-heading",
-  weight: ["600", "700"],
   display: "swap",
 });
 
@@ -19,9 +19,11 @@ const inter = Inter({
   display: "swap",
 });
 
+// Fraunces is only ever used at weight 500 (display headlines and big numbers), so load just that weight.
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-display",
+  weight: "500",
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -39,7 +41,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     type: "website",
     locale: "en_IN",
-    images: ["/assets/east-blr-neighbourhood.png"],
+    images: [{ url: "/assets/og/og-image.jpg", width: 1200, height: 630, alt: "NextDoorStep: resale and rentals across East Bengaluru" }],
   },
 };
 

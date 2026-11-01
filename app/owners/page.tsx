@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import OwnersHero from "@/components/owners/OwnersHero";
+import HeroImage from "@/components/ui/HeroImage";
 import OwnerPaths from "@/components/owners/OwnerPaths";
 import OwnerTimeline from "@/components/owners/OwnerTimeline";
 import ReassuranceBand from "@/components/owners/ReassuranceBand";
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 export default function OwnersPage() {
   return (
     <>
-      <OwnersHero />
+      <OwnersHero image={<HeroImage base="/assets/owners/generated/owners" />} />
       <OwnerPaths />
       <OwnerTimeline />
 

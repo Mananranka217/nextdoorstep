@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "npx serve@14 out -l 3000",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "framer-motion": "^14.7.1",

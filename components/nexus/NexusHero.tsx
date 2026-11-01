@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import type { ReactNode } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import RevealTitle from "@/components/ui/RevealTitle";
 import CountUp from "@/components/ui/CountUp";
@@ -8,10 +8,10 @@ import { WhatsAppIcon } from "@/components/ui/Icons";
 import { waLink } from "@/content/site";
 import { Arrow } from "@/components/owners/icons";
 
-const HERO_IMAGE = "/assets/east-blr-neighbourhood.png";
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export default function NexusHero() {
+/** `image` is a server-rendered <HeroImage /> passed in by the page, so the picture is in the first HTML. */
+export default function NexusHero({ image }: { image: ReactNode }) {
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 700], [0, reduce ? 0 : 90]);
@@ -28,7 +28,7 @@ export default function NexusHero() {
   return (
     <section className="hx hx--page nx-hero" aria-labelledby="nx-hero-title">
       <motion.div className="hx-bg hx-parallax" aria-hidden="true" style={{ y }}>
-        <Image src={HERO_IMAGE} alt="" fill priority sizes="100vw" className="hx-img" />
+        {image}
       </motion.div>
       <div className="hx-overlay nx-overlay" aria-hidden="true" />
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import TenantsHero from "@/components/tenants/TenantsHero";
+import HeroImage from "@/components/ui/HeroImage";
 import JourneyPanels from "@/components/tenants/JourneyPanels";
 import PricingTabs from "@/components/tenants/PricingTabs";
 import BuyerPricing from "@/components/tenants/BuyerPricing";
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 export default function TenantsBuyersPage() {
   return (
     <>
-      <TenantsHero />
+      <TenantsHero image={<HeroImage base="/assets/tenants-buyers/generated/tenants-buyers" />} />
       <JourneyPanels />
       <SampleCard eyebrow="What it looks like" showCta={false} />
 

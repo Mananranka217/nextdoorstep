@@ -1,15 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import PrefillLink from "@/components/ui/PrefillLink";
 import RevealTitle from "@/components/ui/RevealTitle";
 import { ownerCards } from "@/content/audiences";
 import { Arrow, Check } from "./icons";
-
-// Swap this file for a real photograph (2400px wide, dark on the left for the white text).
-const HERO_IMAGE = "/assets/owners/hero.svg";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -21,7 +17,8 @@ type Mode = (typeof modes)[number]["id"];
 
 const facts = ["RERA registered", "Verified tenants", "Free valuation", "No upfront fee for Launch"];
 
-export default function OwnersHero() {
+/** `image` is a server-rendered <HeroImage /> passed in by the page, so the picture is in the first HTML. */
+export default function OwnersHero({ image }: { image: ReactNode }) {
   const reduce = useReducedMotion();
   const [mode, setMode] = useState<Mode>("rent");
   const card = ownerCards.find((c) => c.id === mode) ?? ownerCards[0];
@@ -43,7 +40,7 @@ export default function OwnersHero() {
   return (
     <section className="hx hx--page" aria-labelledby="owners-hero-title">
       <motion.div className="hx-bg hx-parallax" aria-hidden="true" style={{ y }}>
-        <Image src={HERO_IMAGE} alt="" fill priority sizes="100vw" className="hx-img" />
+        {image}
       </motion.div>
       <div className="hx-overlay" aria-hidden="true" />
 

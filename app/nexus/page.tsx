@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import NexusHero from "@/components/nexus/NexusHero";
+import HeroImage from "@/components/ui/HeroImage";
 import NexusPricing from "@/components/nexus/NexusPricing";
 import NexusTokens from "@/components/nexus/NexusTokens";
 import NexusFeatures from "@/components/nexus/NexusFeatures";
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 export default function NexusPage() {
   return (
     <>
-      <NexusHero />
+      <NexusHero image={<HeroImage base="/assets/nexus/generated/nexus" />} />
       <NexusTokens />
       <NexusTimeline />
       <NexusFeatures />

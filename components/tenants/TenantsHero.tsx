@@ -1,16 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import PrefillLink from "@/components/ui/PrefillLink";
 import RevealTitle from "@/components/ui/RevealTitle";
 import HeroSearch, { type SearchIntent } from "@/components/ui/HeroSearch";
 import { tenantBuyerCards } from "@/content/audiences";
 import { Arrow, Check } from "@/components/owners/icons";
-
-// Swap this file for a real photograph (2400px wide, dark on the left for the white text).
-const HERO_IMAGE = "/assets/tenants-buyers/hero.svg";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -30,7 +26,8 @@ const intents: Record<Mode, SearchIntent> = {
 
 const facts = ["RERA registered", "Transparent brokerage", "Guided visits", "Title checks through Nexus"];
 
-export default function TenantsHero() {
+/** `image` is a server-rendered <HeroImage /> passed in by the page, so the picture is in the first HTML. */
+export default function TenantsHero({ image }: { image: ReactNode }) {
   const reduce = useReducedMotion();
   const [mode, setMode] = useState<Mode>("rent");
   const card = tenantBuyerCards.find((c) => c.id === mode) ?? tenantBuyerCards[0];
@@ -62,7 +59,7 @@ export default function TenantsHero() {
   return (
     <section className="hx hx--page" aria-labelledby="tb-hero-title">
       <motion.div className="hx-bg hx-parallax" aria-hidden="true" style={{ y }}>
-        <Image src={HERO_IMAGE} alt="" fill priority sizes="100vw" className="hx-img" />
+        {image}
       </motion.div>
       <div className="hx-overlay" aria-hidden="true" />
 
