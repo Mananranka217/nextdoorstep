@@ -43,7 +43,7 @@ export default function HomePage() {
           accent="questions."
           sub="Everything you need to know about our services."
         />
-        <FaqGroups />
+        <FaqGroups variant="featured" />
       </section>
       <EnquirySection />
     </>

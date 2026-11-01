@@ -2,7 +2,7 @@
 // Pricing plan names are read from pricing.config.ts so renaming a tier here updates the FAQ too.
 import { rentOutConfig, tenantMoveInConfig, buyerConfig, sellerConfig } from "./pricing.config";
 
-export type Faq = { q: string; a: string };
+export type Faq = { q: string; a: string; featured?: boolean };
 export type FaqGroup = { title: string; items: Faq[] };
 
 const [roLite, roMid, roTop] = rentOutConfig.plans;
@@ -24,8 +24,8 @@ export const faqGroups: FaqGroup[] = [
     title: "For tenants",
     items: [
       { q: "How do you shortlist rentals?", a: "Tell us your area, budget and move-in date. We pick homes that fit and arrange guided visits, instead of sending you a long list to sort through." },
-      { q: "Will I get a flood of calls?", a: "No. You get one focused conversation on WhatsApp or phone, usually within a few hours of your enquiry." },
-      { q: "Is the brokerage transparent?", a: "Yes. We tell you what the brokerage is before you commit to anything. The move-in plans are listed on the pricing page." },
+      { q: "Will I get a flood of calls?", featured: true, a: "No. You get one focused conversation on WhatsApp or phone, usually within a few hours of your enquiry." },
+      { q: "Is the brokerage transparent?", featured: true, a: "Yes. We tell you what the brokerage is before you commit to anything. The move-in plans are listed on the pricing page." },
       { q: "What do the move-in plans cost?", a: `${tenantPlansSummary}` },
       { q: "Can I see a home before I decide?", a: "Yes. We arrange guided visits for the homes we shortlist, so you can see them in person before committing to anything." },
       { q: "Who prepares the rent agreement?", a: "We do. The move-in plans include the rent agreement delivered at your doorstep, plus coordination of the deal and handover so both sides know what was agreed." },
@@ -38,7 +38,7 @@ export const faqGroups: FaqGroup[] = [
       { q: "How do you screen tenants?", a: "Our tenant-placement packages include verified tenant screening, so you only meet tenants who have been checked." },
       { q: "What do your owner packages cost?", a: `${ownerPlansSummary} The fee is charged only after a tenant is onboarded.` },
       { q: "What happens when a tenant is found?", a: "With a rental package that includes it, we prepare the agreement and manage the handover, so the owner and tenant both know what was agreed." },
-      { q: "Is the property valuation really free?", a: "Yes. If you are thinking of selling, choose Free Property Valuation in the enquiry form and we will come back to you with a valuation. " + sellerBrokerageText + ", no hidden charges." },
+      { q: "Is the property valuation really free?", featured: true, a: "Yes. If you are thinking of selling, choose Free Property Valuation in the enquiry form and we will come back to you with a valuation. " + sellerBrokerageText + ", no hidden charges." },
     ],
   },
   {
@@ -47,7 +47,7 @@ export const faqGroups: FaqGroup[] = [
       { q: "How does buying work?", a: `Visits, shortlisting and consultation are free. You pay ${buyerBrokerageText}. For legal diligence, registration and ownership transfer, see our <nexus>Nexus</nexus> packages on the pricing page.` },
       { q: "Do you only show verified resale homes?", a: "We shortlist homes for your budget and area, and check titles through <nexus>Nexus</nexus> before you commit, instead of showing you everything on the market." },
       { q: "Can you help me buy a new launch?", a: "Yes. We help you look at RERA-approved projects and arrange site visits. Send a new launch enquiry and tell us your budget and preferred area." },
-      { q: "Do I pay anything before I buy?", a: "No. Visits, shortlisting and consultation are free. The buyer-side brokerage is payable only on a successful purchase." },
+      { q: "Do I pay anything before I buy?", featured: true, a: "No. Visits, shortlisting and consultation are free. The buyer-side brokerage is payable only on a successful purchase." },
     ],
   },
   {
@@ -57,16 +57,19 @@ export const faqGroups: FaqGroup[] = [
       { q: "What documents should a buyer check?", a: "The title chain (previous sale deeds), khata certificate and extract, encumbrance certificate, approved plan and, for new projects, the RERA registration. <nexus>Nexus</nexus> does this legal diligence for you." },
       { q: "What do tenants and owners need for a rent agreement?", a: "Typically ID and address proof for both sides, and proof of ownership from the owner. We prepare the agreement and coordinate the signing and handover." },
       { q: "What is NextDoorStep Complete+?", a: "It is our most popular <nexus>Nexus</nexus> package at ₹69,999 (GST included). It covers legal diligence, registration coordination and ownership transfer assistance, with one team overseeing the whole transaction." },
-      { q: "What is Nexus?", a: "<nexus>Nexus</nexus> is our legal and documentation service for property transactions, from title checks and diligence to registration and ownership transfer." },
+      { q: "What is Nexus?", featured: true, a: "<nexus>Nexus</nexus> is our legal and documentation service for property transactions, from title checks and diligence to registration and ownership transfer." },
     ],
   },
   {
     title: "About NextDoorStep",
     items: [
       { q: "Who is NextDoorStep?", a: "East Bengaluru's resale and rental desk for buyers, tenants and owners. We shortlist what fits instead of showing you everything." },
-      { q: "Are you RERA registered?", a: "Yes. Our RERA registration number is PRM/KA/RERA/1251/310/AG/260423/007159." },
+      { q: "Are you RERA registered?", featured: true, a: "Yes. Our RERA registration number is PRM/KA/RERA/1251/310/AG/260423/007159." },
       { q: "Which areas do you cover?", a: "Whitefield, Sarjapur Road, Bellandur, Marathahalli, Kadugodi and nearby pockets across East Bengaluru. If yours is not listed, send an enquiry and ask." },
       { q: "How do I reach you?", a: "WhatsApp or call +91 9740447501, or write to support@nextdoorstep.in. Our office is at 4th Cross Rd, Bommanahalli, Bengaluru 560068." },
     ],
   },
 ];
+
+/** The handful of questions shown on the home page, in the order they appear in faqGroups. */
+export const featuredFaqs: Faq[] = faqGroups.flatMap((g) => g.items.filter((i) => i.featured));
