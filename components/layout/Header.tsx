@@ -21,9 +21,8 @@ export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  // open: dropdown opened by click/tap. closed: dropdown forced shut (after a click, Escape or
-  // outside click) until the pointer leaves it, so :hover can't keep it showing. "*" means all.
-  const [open, setOpen] = useState<string | null>(null);
+  // closed: the Nexus dropdown is forced shut (after a click, Escape or outside click) until the pointer
+  // leaves it, so :hover can't keep it showing.
   const [closed, setClosed] = useState<string | null>(null);
   const featured = nexusPackages.find((p) => p.featured);
   const nexusActive = pathname === "/nexus";
@@ -46,20 +45,15 @@ export default function Header() {
 
   useEffect(() => {
     setMenuOpen(false);
-    setOpen(null);
   }, [pathname]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      setOpen(null);
       setClosed("*");
     };
     const onDown = (e: MouseEvent | TouchEvent) => {
-      if (!(e.target as Element).closest(".nav-item.has-dropdown")) {
-        setOpen(null);
-        setClosed("*");
-      }
+      if (!(e.target as Element).closest(".nav-item.has-dropdown")) setClosed("*");
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onDown);
@@ -72,22 +66,10 @@ export default function Header() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
-  const closeDropdown = (id: string) => {
-    setOpen(null);
-    setClosed(id);
-  };
-  const toggleDropdown = (id: string) => {
-    if (open === id) {
-      setOpen(null);
-      setClosed(id);
-    } else {
-      setOpen(id);
-      setClosed(null);
-    }
-  };
-  // Props shared by every dropdown wrapper
+  const closeDropdown = (id: string) => setClosed(id);
+  // Props for the Nexus dropdown wrapper
   const itemProps = (id: string) => ({
-    className: `nav-item has-dropdown${open === id ? " is-open" : ""}${closed === id || closed === "*" ? " is-closed" : ""}`,
+    className: `nav-item has-dropdown${closed === id || closed === "*" ? " is-closed" : ""}`,
     onMouseLeave: () => setClosed(null),
     onFocus: (e: FocusEvent) => {
       if ((e.target as Element).matches(":focus-visible")) setClosed(null);
@@ -107,47 +89,11 @@ export default function Header() {
         <nav className="top-nav" aria-label="Primary navigation">
           <Link className={linkClass("/")} href="/">Home</Link>
 
-          {/* Owners dropdown */}
-          <div {...itemProps("owners")}>
-            <button
-              className={`nav-dropdown-trigger${pathname.startsWith("/owners") ? " active" : ""}`}
-              aria-haspopup="true"
-              aria-expanded={open === "owners"}
-              onClick={() => toggleDropdown("owners")}
-            >
-              Owners
-              <svg className="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M2 4.5l4 3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <div className="dropdown simple-dropdown">
-              <div className="dropdown-panel">
-                <Link className="simple-dd-link" href="/owners#rent" onClick={() => closeDropdown("owners")}><span className="simple-dd-dot" />Rent out my property</Link>
-                <Link className="simple-dd-link" href="/owners#sell" onClick={() => closeDropdown("owners")}><span className="simple-dd-dot" />Sell my property</Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Tenants & Buyers dropdown */}
-          <div {...itemProps("tenants")}>
-            <button
-              className={`nav-dropdown-trigger${pathname.startsWith("/tenants") ? " active" : ""}`}
-              aria-haspopup="true"
-              aria-expanded={open === "tenants"}
-              onClick={() => toggleDropdown("tenants")}
-            >
-              Tenants &amp; Buyers
-              <svg className="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M2 4.5l4 3 4-3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <div className="dropdown simple-dropdown">
-              <div className="dropdown-panel">
-                <Link className="simple-dd-link" href="/tenants-buyers#rent" onClick={() => closeDropdown("tenants")}><span className="simple-dd-dot" />Rent a home</Link>
-                <Link className="simple-dd-link" href="/tenants-buyers#buy" onClick={() => closeDropdown("tenants")}><span className="simple-dd-dot" />Buy a home</Link>
-              </div>
-            </div>
-          </div>
+          {mainNav.before.map((item) => (
+            <Link key={item.label} className={linkClass(item.href)} href={item.href}>
+              {item.label}
+            </Link>
+          ))}
 
           <div {...itemProps("nexus")} data-page="nexus">
             <Link className={`nav-dropdown-trigger${nexusActive ? " active" : ""}`} href="/nexus" onClick={() => closeDropdown("nexus")}>
@@ -233,10 +179,11 @@ export default function Header() {
         <div className="mobile-menu-inner">
           <div className="mobile-nav-group">
             <Link className="mobile-nav-link" href="/" onClick={closeMenu}>Home</Link>
-            <Link className="mobile-nav-link" href="/owners#rent" onClick={closeMenu}>Rent out my property</Link>
-            <Link className="mobile-nav-link" href="/owners#sell" onClick={closeMenu}>Sell my property</Link>
-            <Link className="mobile-nav-link" href="/tenants-buyers#rent" onClick={closeMenu}>Rent a home</Link>
-            <Link className="mobile-nav-link" href="/tenants-buyers#buy" onClick={closeMenu}>Buy a home</Link>
+            {mainNav.before.map((item) => (
+              <Link key={item.label} className="mobile-nav-link" href={item.href} onClick={closeMenu}>
+                {item.label}
+              </Link>
+            ))}
             <Link className="mobile-nav-link" href="/nexus" onClick={closeMenu}>
               Nexus
             </Link>

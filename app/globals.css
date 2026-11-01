@@ -286,8 +286,7 @@ p { margin: 0; }
 }
 
 .nav-chevron { flex-shrink: 0; color: var(--gray-400); transition: transform 220ms; }
-.nav-item.has-dropdown:hover .nav-chevron,
-.nav-item.has-dropdown.is-open .nav-chevron { transform: rotate(180deg); color: var(--green); }
+.nav-item.has-dropdown:hover .nav-chevron { transform: rotate(180deg); color: var(--green); }
 
 .nav-badge {
   font-size: var(--fs-2xs);
@@ -319,7 +318,6 @@ p { margin: 0; }
 @media (hover: hover) {
   .nav-item.has-dropdown:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
 }
-.nav-item.has-dropdown.is-open .dropdown,
 .nav-item.has-dropdown:has(:focus-visible) .dropdown { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
 /* Closed by click, Escape or outside click: stay shut until the pointer leaves */
 .nav-item.has-dropdown.is-closed .dropdown,
@@ -367,30 +365,6 @@ p { margin: 0; }
 .dropdown-footer-link:hover { text-decoration: underline; }
 
 .nexus-dropdown { right: 0; left: auto; width: min(520px, calc(100vw - 40px)); }
-
-/* Simple nav dropdowns (Owners, Tenants & Buyers) */
-.simple-dropdown { left: 0; width: 210px; }
-.simple-dropdown .dropdown-panel { padding: 8px; }
-.simple-dd-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 12px;
-  border-radius: var(--r-sm);
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--navy);
-  text-decoration: none;
-  transition: background 130ms, color 130ms;
-}
-.simple-dd-link:hover { background: var(--green-tint); color: var(--green); }
-.simple-dd-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  flex-shrink: 0;
-}
 
 .nexus-dd-grid { display: grid; grid-template-columns: 1fr 200px; gap: 18px; align-items: start; }
 
