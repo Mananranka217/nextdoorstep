@@ -50,9 +50,9 @@ export default function OwnersHero() {
       <div className="hx-inner">
         <motion.p
           className="hx-pill"
-          initial={reduce ? false : { opacity: 0, y: 18 }}
+          initial={reduce ? false : { opacity: 0.01, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease, delay: 0.05 }}
+          transition={{ duration: 0.35, ease, delay: 0.02 }}
         >
           <span className="hx-pill-dot" aria-hidden="true" />
           Owners
@@ -66,18 +66,18 @@ export default function OwnersHero() {
 
         <motion.p
           className="hx-text"
-          initial={reduce ? false : { opacity: 0, y: 18 }}
+          initial={reduce ? false : { opacity: 0.01, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease, delay: 0.55 }}
+          transition={{ duration: 0.35, ease, delay: 0.25 }}
         >
           Two ways we help owners across East Bengaluru. Every button opens the enquiry form with your details half-filled.
         </motion.p>
 
         <motion.div
           className="hx-choose"
-          initial={reduce ? false : { opacity: 0, y: 18 }}
+          initial={reduce ? false : { opacity: 0.01, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease, delay: 0.7 }}
+          transition={{ duration: 0.35, ease, delay: 0.3 }}
         >
           <div className="seg" role="tablist" aria-label="What would you like to do?">
             {modes.map((m) => (

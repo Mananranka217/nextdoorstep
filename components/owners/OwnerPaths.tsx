@@ -1,11 +1,10 @@
 "use client";
 
 import type { ReactNode } from "react";
-import PrefillLink from "@/components/ui/PrefillLink";
+import PathPanel from "@/components/ui/PathPanel";
 import { StaggerGrid, StaggerItem } from "@/components/ui/Stagger";
-import { Point } from "@/components/sections/AudienceCards";
 import { ownerCards } from "@/content/audiences";
-import { Arrow, Camera, FileCheck, House, Key, ShieldCheck, Tag, Users, Valuation } from "./icons";
+import { Camera, FileCheck, House, Key, ShieldCheck, Tag, Users, Valuation } from "./icons";
 
 // Icon for each point, in the same order as the points in content/audiences.ts.
 const pointIcons: Record<string, ReactNode[]> = {
@@ -24,25 +23,9 @@ export default function OwnerPaths() {
       <StaggerGrid className="op-grid">
         {ownerCards.map((card) => {
           const id = card.id ?? "";
-          const dark = id === "sell";
           return (
             <StaggerItem key={card.title} className="op-item">
-              <article id={id} className={`op-panel${dark ? " op-panel--dark" : ""}`}>
-                <span className="op-hero-icon" aria-hidden="true">{heroIcon[id]}</span>
-                <h2 className="op-title">{card.title}</h2>
-                <ul className="op-points">
-                  {card.points.map((point, i) => (
-                    <li key={point}>
-                      <span className="op-point-icon" aria-hidden="true">{pointIcons[id]?.[i]}</span>
-                      <span><Point text={point} link={card.nexusPoint === i} /></span>
-                    </li>
-                  ))}
-                </ul>
-                <PrefillLink className="op-cta" role={card.role} interest={card.interest} note={card.note}>
-                  {card.cta}
-                  <span className="op-cta-arrow"><Arrow /></span>
-                </PrefillLink>
-              </article>
+              <PathPanel card={card} tone={id === "sell" ? "dark" : "light"} heroIcon={heroIcon[id]} pointIcons={pointIcons[id] ?? []} />
             </StaggerItem>
           );
         })}

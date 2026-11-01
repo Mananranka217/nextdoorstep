@@ -60,3 +60,9 @@ export const Arrow = ({ size = 16 }: P) => (
     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
+export const Building = ({ size }: P) => (
+  <Svg size={size}><path d="M5 21V4h9v17M14 9h5v12M2 21h20" /><path d="M8 8h3M8 12h3M8 16h3" /></Svg>
+);
+export const Percent = ({ size }: P) => (
+  <Svg size={size}><path d="M19 5L5 19" /><circle cx="7" cy="7" r="2.5" /><circle cx="17" cy="17" r="2.5" /></Svg>
+);

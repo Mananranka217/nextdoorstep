@@ -33,7 +33,7 @@ export default function RevealTitle({
                   className="hx-word"
                   initial={reduce ? false : { y: "110%" }}
                   animate={{ y: 0 }}
-                  transition={{ duration: 0.8, ease, delay: 0.15 + i * 0.09 }}
+                  transition={{ duration: 0.6, ease, delay: 0.05 + i * 0.06 }}
                 >
                   {w}
                 </motion.span>

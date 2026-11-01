@@ -18,6 +18,12 @@ const interests = [
   "Rent out my property",
   "Free Property Valuation",
 ];
+// Which "I want to" options make sense for each role. The options themselves are unchanged.
+const interestsByRole: Record<string, string[]> = {
+  Buyer: ["Buy a resale home"],
+  Tenant: ["Rent a home"],
+  Owner: ["Sell my property", "Rent out my property", "Free Property Valuation"],
+};
 const services = [...nexusPackages.map((p) => `${p.name} — ${p.price}`), "Not sure yet"];
 
 export default function EnquiryForm({ variant = "general", defaultRole = "", defaultInterest = "" }: Props) {
@@ -61,6 +67,14 @@ export default function EnquiryForm({ variant = "general", defaultRole = "", def
     window.addEventListener(PREFILL_EVENT, onPrefill);
     return () => window.removeEventListener(PREFILL_EVENT, onPrefill);
   }, []);
+
+  function onRoleChange(e: { target: { value: string } }) {
+    const role = e.target.value;
+    setValues((v) => {
+      const allowed = interestsByRole[role];
+      return { ...v, role, interest: allowed && !allowed.includes(v.interest) ? "" : v.interest };
+    });
+  }
 
   function set(field: keyof typeof values) {
     return (e: { target: { value: string } }) => setValues((v) => ({ ...v, [field]: e.target.value }));
@@ -135,7 +149,7 @@ export default function EnquiryForm({ variant = "general", defaultRole = "", def
 
       <div className="form-row">
         <label htmlFor="role">I am a</label>
-        <select id="role" name="role" required value={values.role} onChange={set("role")}>
+        <select id="role" name="role" required value={values.role} onChange={isNexus ? set("role") : onRoleChange}>
           <option value="">Select one</option>
           {(isNexus ? nexusRoles : generalRoles).map((r) => (
             <option key={r}>{r}</option>
@@ -158,9 +172,12 @@ export default function EnquiryForm({ variant = "general", defaultRole = "", def
           <label htmlFor="interest">I want to</label>
           <select id="interest" name="interest" required value={values.interest} onChange={set("interest")}>
             <option value="">Select one</option>
-            {interests.map((i) => (
+            {(interestsByRole[values.role] ?? interests).map((i) => (
               <option key={i}>{i}</option>
             ))}
+            {values.interest && !(interestsByRole[values.role] ?? interests).includes(values.interest) && (
+              <option key={values.interest}>{values.interest}</option>
+            )}
           </select>
         </div>
       )}
